@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "weasley-clock"
+version = "0.1.0"
+description = ""
+authors = ["Maxr1998 <max.rumpf1998@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+rpi-gpio = "^0.7.1"
+schedule = "^1.2.0"
+icalendar = "^5.0.7"
+requests = "^2.31.0"
+rpimotorlib = "^3.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
