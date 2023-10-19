@@ -29,13 +29,15 @@ def job():
 
 
 def motors_clockwise():
-    motor.motor_clockwise(motor_num=1, steps=512)
-    motor.motor_clockwise(motor_num=2, steps=512)
+    motor.motor_clockwise(motor_num=0, steps=256)
+    motor.motor_clockwise(motor_num=1, steps=256)
+    motor.motor_clockwise(motor_num=2, steps=256)
 
 
 if __name__ == '__main__':
 
     sync_calendar()
+    motor.reset_motors()
     schedule.every(5).minutes.do(sync_calendar)
     schedule.every(5).seconds.do(motors_clockwise)
     while True:
