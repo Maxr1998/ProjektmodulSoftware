@@ -1,0 +1,73 @@
+{
+  "$id": "user_config.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "properties": {
+    "work_hours": {
+      "type": "object",
+      "description": "The working hours of the user. Will be used to determine whether at home or at work if no event matches otherwise.",
+      "properties": {
+        "start": {
+          "type": "string",
+          "pattern": "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$"
+        },
+        "end": {
+          "type": "string",
+          "pattern": "^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "start",
+        "end"
+      ]
+    },
+    "keywords": {
+      "type": "object",
+      "description": "Keywords from the calendar which will be mapped to the given event type.",
+      "properties": {
+        "home": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "work": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "meeting": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "lecture": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "conference": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "vacation": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "work_hours",
+    "keywords"
+  ]
+}
