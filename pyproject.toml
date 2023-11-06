@@ -6,7 +6,7 @@ authors = ["Maxr1998 <max.rumpf1998@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.11"
 rpi-gpio = "^0.7.1"
 schedule = "^1.2.0"
 icalendar = "^5.0.7"
