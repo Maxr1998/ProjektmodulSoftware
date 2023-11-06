@@ -1,2 +1,7 @@
 .idea/
 __pycache__/
+
+# ignore configs for specific users
+[0-9].yaml
+# ignore calendar files
+*.ics
