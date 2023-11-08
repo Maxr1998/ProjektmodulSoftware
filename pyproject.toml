@@ -12,6 +12,8 @@ schedule = "^1.2.0"
 icalendar = "^5.0.7"
 requests = "^2.31.0"
 rpimotorlib = "^3.2"
+pydantic = "^2.4.2"
+pydantic-yaml = "^1.2.0"
 
 
 [build-system]

@@ -5,8 +5,15 @@ from icalendar import Calendar
 
 import calendar_helper
 import motor
+from user_configuration import UserConfiguration
 
+configurations: list[UserConfiguration | None] = [None, None, None]
 calendars: list[Calendar | None] = [None, None, None]
+
+
+def refresh_configurations():
+    for i in range(3):
+        configurations[i] = UserConfiguration.load_configuration(i)
 
 
 def refresh_calendars():
@@ -15,6 +22,7 @@ def refresh_calendars():
 
 
 if __name__ == '__main__':
+    refresh_configurations()
     refresh_calendars()
     motor.reset_motors()
 
