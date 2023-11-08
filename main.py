@@ -4,6 +4,7 @@ import schedule
 from icalendar import Calendar
 
 import calendar_helper
+from config import USER_COUNT
 import motor
 from user_configuration import UserConfiguration
 
@@ -12,12 +13,12 @@ calendars: list[Calendar | None] = [None, None, None]
 
 
 def refresh_configurations():
-    for i in range(3):
+    for i in range(USER_COUNT):
         configurations[i] = UserConfiguration.load_configuration(i)
 
 
 def refresh_calendars():
-    for i in range(3):
+    for i in range(USER_COUNT):
         calendars[i] = calendar_helper.load_calendar(i)
 
 
