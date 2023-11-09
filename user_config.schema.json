@@ -37,13 +37,13 @@
             "type": "string"
           }
         },
-        "meeting": {
+        "lecture": {
           "type": "array",
           "items": {
             "type": "string"
           }
         },
-        "lecture": {
+        "meeting": {
           "type": "array",
           "items": {
             "type": "string"

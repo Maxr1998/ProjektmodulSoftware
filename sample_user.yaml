@@ -8,13 +8,13 @@ keywords:
     - "home office"
     - "HO"
   work: [ ]
-  meeting:
-    - "Besprechung"
   lecture:
     - "Vorlesung"
     - "VL"
     - "Seminar"
     - "Übung"
+  meeting:
+    - "Besprechung"
   conference:
     - "Konferenz"
   vacation:
