@@ -6,7 +6,7 @@ from icalendar import Calendar
 import calendar_helper
 import motor
 from calendar_helper import Event
-from config import USER_COUNT
+from config import USER_COUNT, LOCATION_POSITIONS
 from user_configuration import UserConfiguration, LocationKeywords
 
 configurations: list[UserConfiguration | None] = [None, None, None]
@@ -41,7 +41,8 @@ def update_locations():
         location = calculate_location(configuration, current_events)
         print(f'User {i + 1} is currently at {location}')
 
-        # TODO: update motors
+        # Update motor position
+        motor.motor_go_to_position(i, LOCATION_POSITIONS[location])
 
 
 def main():

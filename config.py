@@ -13,3 +13,12 @@ MOTOR_PINS = [
 SENSOR_PINS = [4, 18, 17]
 
 STEPS_PER_REVOLUTION = 512
+
+LOCATION_POSITIONS = {
+    'home': 0,
+    'work': STEPS_PER_REVOLUTION // 6,
+    'lecture': STEPS_PER_REVOLUTION // 3,
+    'meeting': STEPS_PER_REVOLUTION // 2,
+    'conference': STEPS_PER_REVOLUTION // 3 * 2,
+    'vacation': STEPS_PER_REVOLUTION // 6 * 5,
+}
