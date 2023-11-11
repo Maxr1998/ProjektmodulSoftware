@@ -80,7 +80,10 @@ def motor_go_to_position(motor_num, target_position):
     if current_position == target_position:
         return
 
+    print(f"Moving motor {motor_num} to position {target_position}")
+
     # Always go clockwise, even if the target position is behind the current position
     steps = (target_position - current_position) % STEPS_PER_REVOLUTION
 
     motor_clockwise(motor_num=motor_num, steps=steps)
+    print(f"Motor {motor_num} moved to position {target_position}")
