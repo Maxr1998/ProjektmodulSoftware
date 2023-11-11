@@ -1,5 +1,5 @@
 import os
-from datetime import date, datetime
+from datetime import datetime
 
 from dateutil.tz import tzlocal
 from icalendar import Calendar
@@ -44,14 +44,14 @@ def get_current_events(calendar: Calendar) -> list[Event]:
         end = calendar_event['DTEND'].dt
 
         # Handle all-day events by converting the date objects to datetime
-        if isinstance(start, date):
+        if not isinstance(start, datetime):
             start = datetime.combine(start, datetime.min.time(), tzinfo=tzlocal())
-        if isinstance(end, date):
+        if not isinstance(end, datetime):
             end = datetime.combine(end, datetime.min.time(), tzinfo=tzlocal())
 
         if start <= get_time() <= end:
             event = Event(start, end, calendar_event.get('SUMMARY', ''), calendar_event.get('LOCATION'))
-            print(f'Found current event "{event.summary}"')
+            print(f'Found current event "{event.summary} from {event.start} to {event.end}"')
             current_events.append(event)
 
     return current_events
