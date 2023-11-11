@@ -35,6 +35,8 @@ def update_locations():
     for i in range(USER_COUNT):
         configuration = configurations[i]
         calendar = calendars[i]
+        if not configuration or not calendar:
+            continue
         current_events = calendar_helper.get_current_events(calendar)
         location = calculate_location(configuration, current_events)
         print(f'User {i + 1} is currently at {location}')
