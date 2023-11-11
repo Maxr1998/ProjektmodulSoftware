@@ -42,7 +42,7 @@ def update_locations():
         # TODO: update motors
 
 
-if __name__ == '__main__':
+def main():
     refresh_configurations()
     refresh_calendars()
     motor.reset_motors()
@@ -54,3 +54,7 @@ if __name__ == '__main__':
     while True:
         schedule.run_pending()
         time.sleep(1)
+
+
+if __name__ == '__main__':
+    main()
