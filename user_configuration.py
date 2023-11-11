@@ -1,10 +1,9 @@
-from datetime import time, datetime
+from datetime import time
 
-from dateutil.tz import tzlocal
 from pydantic import BaseModel, ValidationError
 from pydantic_yaml import parse_yaml_file_as
 
-from calendar_helper import Event
+from calendar_helper import Event, get_time
 
 
 class WorkHours(BaseModel):
@@ -71,7 +70,7 @@ class UserConfiguration(BaseModel):
         """
         Calculates the fallback location based on the current time and day.
         """
-        now = datetime.now(tz=tzlocal())
+        now = get_time()
         working_day = now.weekday() < 5
         if working_day and self.work_hours.start <= now.time() <= self.work_hours.end:
             return 'work'
