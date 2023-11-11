@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
 
+from dateutil.rrule import rrulestr
 from dateutil.tz import tzlocal
 from icalendar import Calendar
 
@@ -49,9 +50,22 @@ def get_current_events(calendar: Calendar) -> list[Event]:
         if not isinstance(end, datetime):
             end = datetime.combine(end, datetime.min.time(), tzinfo=tzlocal())
 
-        if start <= get_time() <= end:
-            event = Event(start, end, calendar_event.get('SUMMARY', ''), calendar_event.get('LOCATION'))
-            print(f'Found current event "{event.summary} from {event.start} to {event.end}"')
-            current_events.append(event)
+        # Stack of event times to check
+        stack = [(start, end)]
+
+        # Handle recurring events
+        if 'RRULE' in calendar_event:
+            rrule_str = calendar_event['RRULE'].to_ical().decode('utf-8')
+            rrule = rrulestr(rrule_str, dtstart=start)
+            duration = end - start
+            for recurrence in rrule:
+                stack.append((recurrence, recurrence + duration))
+
+        # Check for current events in stack
+        for start, end in stack:
+            if start <= get_time() <= end:
+                event = Event(start, end, calendar_event.get('SUMMARY', ''), calendar_event.get('LOCATION'))
+                print(f'Found current event "{event.summary} from {event.start} to {event.end}"')
+                current_events.append(event)
 
     return current_events
