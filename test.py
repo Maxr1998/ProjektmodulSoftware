@@ -5,7 +5,7 @@ import schedule
 import calendar_helper
 from config import TZ
 
-current_time = TZ.localize(datetime(2023, 10, 18, 8, 0, 0))
+current_time = datetime(2023, 10, 18, 8, 0, 0, tzinfo=TZ)
 
 
 def mock_get_time():

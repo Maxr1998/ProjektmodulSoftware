@@ -47,9 +47,9 @@ def get_current_events(calendar: Calendar) -> list[Event]:
 
         # Handle all-day events by converting the date objects to datetime
         if not isinstance(start, datetime):
-            start = TZ.localize(datetime.combine(start, datetime.min.time()))
+            start = datetime.combine(start, datetime.min.time(), tzinfo=TZ)
         if not isinstance(end, datetime):
-            end = TZ.localize(datetime.combine(end, datetime.min.time()))
+            end = datetime.combine(end, datetime.min.time(), tzinfo=TZ)
 
         # Stack of event times to check
         stack = [(start, end)]
@@ -61,7 +61,7 @@ def get_current_events(calendar: Calendar) -> list[Event]:
             rrule = rrulestr(rrule_str, dtstart=naive_start, ignoretz=True)
             duration = end - start
             for recurrence in rrule:
-                localized = TZ.localize(recurrence)  # add back timezone to start time
+                localized = recurrence.replace(tzinfo=TZ)  # add back timezone to start time
                 stack.append((localized, localized + duration))
 
         # Check for current events in stack

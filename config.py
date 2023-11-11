@@ -1,6 +1,6 @@
-import pytz
+from zoneinfo import ZoneInfo
 
-TZ = pytz.timezone('Europe/Berlin')  # hardcoded because otherwise things would get ugly
+TZ = ZoneInfo('Europe/Berlin')  # hardcoded because otherwise things would get ugly
 
 USER_COUNT = 3
 
