@@ -1,10 +1,14 @@
-import RPi.GPIO as GPIO
-from RpiMotorLib import RpiMotorLib
+try:
+    import RPi.GPIO as GPIO
+    from RpiMotorLib import RpiMotorLib
+
+    # Setup motors
+    motors = RpiMotorLib.BYJMotor("Motors", "28BYJ")
+    GPIO_IMPORTED = True
+except RuntimeError:
+    GPIO_IMPORTED = False
 
 from config import MOTOR_PINS, SENSOR_PINS, STEPS_PER_REVOLUTION
-
-# Setup motor
-motors = RpiMotorLib.BYJMotor("Motors", "28BYJ")
 
 motor_positions = [0, 0, 0]
 
@@ -28,6 +32,10 @@ def motor_clockwise(motor_num, steps=STEPS_PER_REVOLUTION):
     """
     Moves the motor clockwise by the given number of steps.
     """
+    if not GPIO_IMPORTED:
+        print("GPIO not imported, skipping motor movement")
+        return
+
     motors.motor_run(MOTOR_PINS[motor_num], wait=.001, steps=steps)
     motor_positions[motor_num] += steps
     motor_positions[motor_num] %= STEPS_PER_REVOLUTION
@@ -38,6 +46,11 @@ def reset_motors():
     Resets all motors to their default position.
     """
     global motor_positions
+
+    if not GPIO_IMPORTED:
+        print("GPIO not imported, skipping motor reset")
+        motor_positions = [0, 0, 0]
+        return
 
     for motor_num in range(3):
         setup_sensor(motor_num)
