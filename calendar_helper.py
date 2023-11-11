@@ -2,8 +2,9 @@ import os
 from datetime import datetime
 
 from dateutil.rrule import rrulestr
-from dateutil.tz import tzlocal
 from icalendar import Calendar
+
+from config import TZ
 
 
 class Event:
@@ -18,7 +19,7 @@ def get_time() -> datetime:
     """
     Returns the current time. Used for mocking.
     """
-    return datetime.now(tz=tzlocal())
+    return datetime.now(tz=TZ)
 
 
 def load_calendar(user_num: int) -> Calendar | None:
@@ -46,9 +47,9 @@ def get_current_events(calendar: Calendar) -> list[Event]:
 
         # Handle all-day events by converting the date objects to datetime
         if not isinstance(start, datetime):
-            start = datetime.combine(start, datetime.min.time(), tzinfo=tzlocal())
+            start = TZ.localize(datetime.combine(start, datetime.min.time()))
         if not isinstance(end, datetime):
-            end = datetime.combine(end, datetime.min.time(), tzinfo=tzlocal())
+            end = TZ.localize(datetime.combine(end, datetime.min.time()))
 
         # Stack of event times to check
         stack = [(start, end)]
@@ -56,10 +57,12 @@ def get_current_events(calendar: Calendar) -> list[Event]:
         # Handle recurring events
         if 'RRULE' in calendar_event:
             rrule_str = calendar_event['RRULE'].to_ical().decode('utf-8')
-            rrule = rrulestr(rrule_str, dtstart=start)
+            naive_start = start.replace(tzinfo=None)  # ignore timezone for rrule
+            rrule = rrulestr(rrule_str, dtstart=naive_start, ignoretz=True)
             duration = end - start
             for recurrence in rrule:
-                stack.append((recurrence, recurrence + duration))
+                localized = TZ.localize(recurrence)  # add back timezone to start time
+                stack.append((localized, localized + duration))
 
         # Check for current events in stack
         for start, end in stack:

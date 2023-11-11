@@ -1,3 +1,7 @@
+import pytz
+
+TZ = pytz.timezone('Europe/Berlin')  # hardcoded because otherwise things would get ugly
+
 USER_COUNT = 3
 
 MOTOR_PINS = [
